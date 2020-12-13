@@ -1,23 +1,25 @@
 {
-  "name": "tutorial_oauth",
+  "name": "uas_ii3160_18218002",
   "version": "1.0.0",
-  "description": "",
+  "description": "uas mata kuliah ii3160 teknologi sistem terintegrasi",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node app",
     "dev": "cross-env NODE_ENV=devleopment nodemon app"
   },
-  "author": "",
+  "author": "Adrian Timotheus",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
+    "mongodb": "^3.6.3",
     "mongoose": "^5.11.7",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
@@ -26,5 +28,13 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdrianTimotheus/II3160_18218002.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AdrianTimotheus/II3160_18218002/issues"
+  },
+  "homepage": "https://github.com/AdrianTimotheus/II3160_18218002#readme"
 }
