@@ -36,6 +36,79 @@ router.get('/', ensureAuth, async(req,res) =>{
     }
 })
 
+//desc show edit page
+//route: GET /quotes/edit/:id
+router.get('/edit/:id',ensureAuth, async (req, res) => {
+    try {
+        const quotes = await Quotes.findOne({
+          _id: req.params.id,
+        }).lean()
+    
+        if (!quotes) {
+          return res.render('error/404')
+        }
+    
+        if (quotes.user != req.user.id) {
+          res.redirect('/quotes')
+        } else {
+          res.render('quotes/edit', {
+            quotes,
+          })
+        }
+      } catch (err) {
+        console.error(err)
+        return res.render('error/500')
+      }
+})
+
+// @desc    Update quotes
+// @route   PUT /quotes/:id
+router.put('/:id', ensureAuth, async (req, res) => {
+    try {
+      let quotes = await Quotes.findById(req.params.id).lean()
+  
+      if (!quotes) {
+        return res.render('error/404')
+      }
+  
+      if (quotes.user != req.user.id) {
+        res.redirect('/quotes')
+      } else {
+        quotes = await Quotes.findOneAndUpdate({ _id: req.params.id }, req.body, {
+          new: true,
+          runValidators: true,
+        })
+  
+        res.redirect('/dashboard')
+      }
+    } catch (err) {
+      console.error(err)
+      return res.render('error/500')
+    }
+  })
+  
+// @desc    Delete quotes
+// @route   DELETE /quotes/:id
+router.delete('/:id', ensureAuth, async (req, res) => {
+try {
+    let quotes = await Quotes.findById(req.params.id).lean()
+
+    if (!quotes) {
+        return res.render('error/404')
+    }
+
+    if (quotes.user != req.user.id) {
+        res.redirect('/stories')
+    } else {
+        await Quotes.remove({ _id: req.params.id })
+        res.redirect('/dashboard')
+    }
+    } catch (err) {
+    console.error(err)
+    return res.render('error/500')
+    }
+})
+
 //database functions
 async function loadQuotesCollection(){
     const client = await mongoDB.MongoClient.connect(process.env.MONGO_URI,{
