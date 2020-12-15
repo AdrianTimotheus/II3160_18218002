@@ -1,28 +1,29 @@
-<h6>dashboard</h6>
-<h3>Welcome, {{name}}</h3>
-<p>Here are your stories</p>
-{{#if stories}}
+<h3 style="text-align: center">Welcome, {{name}}</h3>
+<h5 style="text-align:center">Quotes Collection:</h6>
+{{#if quotes}}
 <table class="striped">
+    <colgroup>
+        <col span="1" style="width: 85%;">
+        <col span="1" style="width: 15%;">
+    </colgroup>
     <thead>
         <tr>
             <th>Title</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        {{#each stories}}
+        {{#each quotes}}
         <tr>
-            <td><a href="/stories/{{_id}}">{{title}}</a></td>
-            <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
-            <td><span class="dash-status">{{status}}</span></td>
+            <td>{{title}}</td>
+            {{!-- <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td> --}}
+            {{!-- <td><span class="dash-status">{{status}}</span></td> --}}
             <td>
-                <a href="/stories/edit/{{_id}}" class="btn btn-float">
+                <a href="/quotes/edit/{{_id}}" class="btn btn-float">
                     <i class="fas fa-edit"></i>
                 </a>
 
-                <form action="/stories/{{_id}}" method="POST" id="delete-form">
+                <form action="/quotes/{{_id}}" method="POST" id="delete-form">
                     <input type="hidden" name="method" value="DELETE">
                     <button type="submit" class="btn red">
                         <i class="fas fa-trash"></i>
@@ -34,5 +35,5 @@
     </tbody>
 </table>
 {{else}}
-<p>Add a new quote to cheer up others by clicking the + button below!</p>
+<p style="text-align: center;">Add your own quote collection by clicking the + button below!</p>
 {{/if}}

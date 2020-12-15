@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {ensureAuth, ensureGuest} = require('../middleware/auth')
 
-const Story = require('../models/Story')
+const Quotes = require('../models/Quotes')
 
 //desc: login and landing page
 //route: GET /
@@ -16,10 +16,10 @@ router.get('/', ensureGuest, (req,res) =>{
 //route: GET / dashboard
 router.get('/dashboard', ensureAuth, async (req,res) => {
     try {
-        const stories = await  Story.find({ user: req.user.id }).lean()
+        const quotes = await  Quotes.find({ user: req.user.id }).lean()
         res.render('dashboard',{
             name: req.user.firstName,
-            stories
+            quotes
         })
     } catch (error) {
         console.error(error)
