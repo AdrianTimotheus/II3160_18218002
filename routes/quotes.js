@@ -26,10 +26,28 @@ router.post('/', ensureAuth, async (req,res) =>{
 
 //desc: get all quotes from database
 //route: GET /quotes
-router.get('/', ensureAuth, async(req,res) =>{
+router.get('/', async(req,res) =>{
     try {
         const quotes = await loadQuotesCollection()
         res.send(await quotes.find({}).toArray());
+    } catch (error) {
+        console.log(error)
+        res.render('error/500')
+    }
+})
+
+//desc: show random quotes
+//route: GET /quotes/random
+router.get('/random', async (req , res) => {
+    try {
+        const quotes = await loadQuotesCollection()
+        var arg = await (quotes.find({}).toArray())
+        // console.log((arg.length))
+        var randomNumber = Math.floor(Math.random() * arg.length)
+        var test = eval(arg)
+        // console.log(test[0].title)
+        console.log(randomNumber)
+        res.send(test[randomNumber].title)
     } catch (error) {
         console.log(error)
         res.render('error/500')
@@ -55,6 +73,25 @@ router.get('/edit/:id',ensureAuth, async (req, res) => {
             quotes,
           })
         }
+      } catch (err) {
+        console.error(err)
+        return res.render('error/500')
+      }
+})
+
+//desc get single quote
+//route: GET /quotes/:id
+router.get('/:id',ensureAuth, async (req, res) => {
+    try {
+        const quotes = await Quotes.findOne({
+          _id: req.params.id,
+        }).lean()
+    
+        if (!quotes) {
+          return res.render('error/404')
+        }
+    
+        res.send(quotes)
       } catch (err) {
         console.error(err)
         return res.render('error/500')

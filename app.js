@@ -9,12 +9,21 @@ const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const methodOverride = require('method-override')
+// const requirejs = require('requirejs')
 
 //load config
 dotenv.config({path: './config/config.env'})
 
 //passport config
 require('./config/passport')(passport)
+
+// //requirejs config
+// requirejs.config({
+//   //Pass the top-level main.js/index.js require
+//   //function to requirejs so that node modules
+//   //are loaded relative to the top-level JS file.
+//   nodeRequire: require
+// });
 
 connectDB()
 
@@ -42,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebars helpers
-const { formatDate,editIcon } = require('./helpers/hbs')
+const { formatDate,generateRandomQuotes } = require('./helpers/hbs')
 
 //handlebars, middleware
 app.engine(
@@ -50,6 +59,7 @@ app.engine(
   exphbs({ 
     helpers: {
       formatDate,
+      generateRandomQuotes
     },
   defaultLayout: 'main', extname: '.hbs' 
   })
