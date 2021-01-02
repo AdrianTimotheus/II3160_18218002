@@ -1,0 +1,13 @@
+setup:
+#tidak perlu setup apa-apa
+
+build:
+  docker:
+    web: Dockerfile
+
+release:
+#tidak perlu rilis apa-apa
+
+run:
+  web: npm start
+

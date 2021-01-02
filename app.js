@@ -1,29 +1,20 @@
-const path = require('path')
-const express = require('express')
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
-const connectDB = require('./config/db')
-const morgan = require('morgan')
-const exphbs = require('express-handlebars')
-const passport = require('passport')
-const session = require('express-session')
-const MongoStore = require('connect-mongo')(session)
-const methodOverride = require('method-override')
-// const requirejs = require('requirejs')
+const path = require('path') //untuk path API
+const express = require('express') // untuk backend
+const mongoose = require('mongoose') // operasi mongoDB
+const dotenv = require('dotenv') //untuk config.env
+const connectDB = require('./config/db') // connect ke mongoDB
+const morgan = require('morgan') //membuat middleware autentikasi
+const exphbs = require('express-handlebars') //views + frontend
+const passport = require('passport') //autentikasi google+
+const session = require('express-session') //menyimpan session agar user tidak ke logout terus
+const MongoStore = require('connect-mongo')(session) //untuk session
+const methodOverride = require('method-override') //implementasi PUT + DELETE
 
 //load config
 dotenv.config({path: './config/config.env'})
 
 //passport config
 require('./config/passport')(passport)
-
-// //requirejs config
-// requirejs.config({
-//   //Pass the top-level main.js/index.js require
-//   //function to requirejs so that node modules
-//   //are loaded relative to the top-level JS file.
-//   nodeRequire: require
-// });
 
 connectDB()
 
@@ -51,15 +42,14 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebars helpers
-const { formatDate,generateRandomQuotes } = require('./helpers/hbs')
+const { formatDate } = require('./helpers/hbs')
 
 //handlebars, middleware
 app.engine(
   '.hbs', 
   exphbs({ 
     helpers: {
-      formatDate,
-      generateRandomQuotes
+      formatDate
     },
   defaultLayout: 'main', extname: '.hbs' 
   })
